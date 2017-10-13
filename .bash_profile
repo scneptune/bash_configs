@@ -9,5 +9,4 @@ alias keyconfigs="atom ~/.karabiner.d/configuration/karabiner.json"
 export NVM_DIR="$HOME/.nvm"
   . "$(brew --prefix nvm)/nvm.sh"
 eval "$(rbenv init -)"
-export HOMEBREW_GITHUB_API_TOKEN=d02c30b150ac45b021247fb1bfa77d1d4dd9f468
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
