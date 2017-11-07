@@ -1,16 +1,17 @@
-syntax on
-
-
 " Head
 " =============================================================================
   set nocompatible                      " why is this not the default?
   filetype off
+
   nnoremap ; :
+
 " Packages
 " =============================================================================
   set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#rc()
+
   Plugin 'gmarik/vundle'
+
   Plugin 'tpope/vim-endwise'
   Plugin 'tpope/vim-git'
   Plugin 'tpope/vim-fugitive'
@@ -20,6 +21,8 @@ syntax on
   Plugin 'tpope/vim-abolish'
   Plugin 'tpope/vim-eunuch'
   Plugin 'tpope/vim-commentary'
+  Plugin 'vim-airline/vim-airline'
+  Plugin 'vim-airline/vim-airline-themes'
   Plugin 'ervandew/supertab'
   Plugin 'michaeljsmith/vim-indent-object'
   Plugin 'Townk/vim-autoclose'
@@ -28,29 +31,37 @@ syntax on
   " css
   Plugin 'wavded/vim-stylus'
   Plugin 'groenewege/vim-less'
+  Plugin 'ap/vim-css-color'
+
   " html
   Plugin 'tpope/vim-ragtag'
   Plugin 'digitaltoad/vim-jade'
   Plugin 'juvenn/mustache'
   Plugin 'tpope/vim-markdown'
+
   " javascript
   Plugin 'pangloss/vim-javascript'
   Plugin 'kchmck/vim-coffee-script'
   Plugin 'isRuslan/vim-es6'
+
   " ruby
   Plugin 'tpope/vim-rake'
   Plugin 'tpope/vim-rails'
+
   " files
   Plugin 'corntrace/bufexplorer'
   Plugin 'scrooloose/nerdtree'
   Plugin 'kien/ctrlp.vim'
+
   " colors
-  Plugin 'altercation/vim-colors-solarized'
-  Plugin 'altercation/vim-colors-codeschool'
-  Plugin 'chriskempson/base16-vim'
+  Plugin 'nightsense/carbonized'
+
+  Plugin 'junegunn/vim-easy-align'
   Plugin 'mxw/vim-jsx'
  " Plugin 'gorodinskiy/vim-coloresque'
+
   let g:jsx_ext_required = 0
+
 " General
 " =============================================================================
   filetype plugin indent on
@@ -61,8 +72,10 @@ syntax on
   set encoding=utf-8 nobomb             " People still use latin1?
   set exrc                              " use per-project .virmc
   set secure                            " but disallow autocmd, shell and write
+  let g:airline#extensions#tabline#enabled = 1
 " Colors and Theme
 " =============================================================================
+
   if &t_Co >= 2 || has("gui_running")
     syntax on
     set background&
@@ -74,6 +87,7 @@ syntax on
     set transparency=5
     set background=dark
     "set guifont=Menlo:h14
+
     " a: visual-mode autoselect (takes over the OS selection process)
     set guioptions+=a
     " A: autoselect for modeless selection
@@ -86,6 +100,7 @@ syntax on
     set guioptions+=m
     " t: include tear-off menu items
     set guioptions+=t
+
     " e: don't use gui tabs, they change the height of the window
     set guioptions-=e
     " T: system toolbar
@@ -96,6 +111,7 @@ syntax on
     set guioptions-=l
     " L: left-hand scrollbar when vertically-split window
     set guioptions-=L
+
     set fuoptions=maxvert,maxhorz
   else
     set t_Co=256
@@ -109,16 +125,18 @@ syntax on
       let &t_EI = "\<Esc>]50;CursorShape=0\x7"
     endif
   endif
+
   hi OverLength     guifg=#586e75 guibg=#073642
   hi OverLength     ctermfg=240   ctermbg=235
+
   set fillchars=vert:\
-  colorscheme maui
 
 " Backups (or lack thereof)
 " =============================================================================
   set nobackup                          " do not keep backups after close
   set nowritebackup                     " do not keep backups while working
   set noswapfile                        " don't keep swap files either
+
 " UI
 " =============================================================================
   set ruler                             " show the cursor position
@@ -139,11 +157,14 @@ syntax on
   set laststatus=2                      " always show the status line
   set noerrorbells                      " shut up already
   set visualbell                        " SHUT UP ALREADY
+  colorscheme carbonized-dark 
+
 " Keyboarding
 " =============================================================================
   set backspace=indent,eol,start        " backspace over anything
   set esckeys                           " we like our arrow keys?
   set ttimeoutlen=10                    " but we also hate timeouts on <Esc>
+
 " Text Formatting
 " =============================================================================
   set autoindent                        " auto-indent new lines
@@ -156,6 +177,7 @@ syntax on
   set nosmarttab                        " go away, tabs. don't come back
   set shiftround                        " round shifts to multiple of indent
   set textwidth=0                      " wrap at 80 characters
+
   set formatoptions+=n1                 " help fo-table
                                         " defaults: tcq
                                         " t: auto-wrap text using text-width
@@ -163,17 +185,23 @@ syntax on
                                         " q: auto-format comments with 'gq'
                                         " n: recognize numbered lists
                                         " 1: don't break after 1-char word
+
   set formatprg="par -qe"               " use par for 'gq':
                                         " http://www.nicemice.net/par/par-doc.var
                                         " e: superfluous lines removed
                                         " q: separate quote levels with newlines
+
   " Whitespace Highlighting
   set list listchars=tab:»\ ,trail:·,precedes:<,extends:>
+  xmap ga <Plug>(EasyAlign)
+  nmap ga <Plug>(EasyAlign)
+
 " Folding
 " =============================================================================
   set foldmethod=indent                 " really the only way that makes sense
   set foldlevelstart=99                 " open all folds by default
   set foldignore=                       " don't try to be clever
+
 " Mappings
 " =============================================================================
   let mapleader = ','                   " because fuck you
@@ -200,19 +228,25 @@ syntax on
   "   y   yank to system clipboard, follow with normal yank operations
   "   ,   turn off search highlighting
   "   _   PLUGIN: intro to tcomment commands, see 'help tcomment-maps'
+
   " I always hit this when I mean I, O or J
   nnoremap K <Nop>
+
   " repeat moves the cursor back to where it was
   nnoremap . .`[
+
   " keep selections when indenting in visual mode
   vnoremap > >gv
   vnoremap < <gv
+
   " record a quick macro in the Q slot, play back with qq
   nnoremap Q @q
+
   " disable the fucking help
   inoremap <F1> <ESC>
   nnoremap <F1> <ESC>
   vnoremap <F1> <ESC>
+
   " --- Stealing a few things from emacs
   " nav bindings
   inoremap <C-a> <C-o>0
@@ -221,19 +255,25 @@ syntax on
   inoremap <C-e> <C-o>$
   cnoremap <C-e> <End>
   nnoremap <C-e> $
+
   " option-backspace over words
   " this does NOT work in terminal vim, only macvim
   inoremap <M-Backspace> <M-[>ciw
   cnoremap <M-Backspace> <S-Right> <C-W>
+
   cnoremap <M-Right>  <S-Right>
   cnoremap <M-Left>   <S-Left>
+
   " autoclose pairs
   let g:AutoClosePairs_add = "'"
   let g:AutoCloseProtectedRegions = ["Comment", "String", "Character"]
+
   " open this in Marked
   nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+
   " fix syntax highlighting
   nnoremap <leader>k :syntax sync fromstart<cr>
+
 " Searching
 " =============================================================================
   set ignorecase                        " ignore case in searches
@@ -242,13 +282,16 @@ syntax on
   set incsearch                         " show incremental seraches
   " remove the highlight with ,,
   nnoremap <silent><Leader>, :noh<cr>
+
   " make search use real regexes
   nnoremap / /\v
   vnoremap / /\v
+
   " use ack. No, not the vim-ack plugin. Ack. Instead of grep.
   set grepprg=ack\ -aH\ --nocolor       " --no-color because that fucks us up
                                         " -a: search all types, except ignored
                                         " -H: prints the filename
+
 " Spelling
 " =============================================================================
   set spelllang=en_us                   " When you need it, you need it.
@@ -259,6 +302,7 @@ syntax on
   nnoremap <Leader>sp ]p
   nnoremap <Leader>sa zg
   nnoremap <Leader>s? z=
+
 " Auto Commands
 " =============================================================================
 "
@@ -267,8 +311,7 @@ syntax on
   autocmd BufNewFile,BufRead * set foldmethod=indent
   autocmd BufNewFile,BufRead *.diff set foldmethod=diff
   autocmd VimEnter * NERDTree
-  autocmd VimEnter * wincmd p
-
+  
 " File Formats
 " =============================================================================
   au BufRead,BufNewFile gitconfig                         setf gitconfig
@@ -277,46 +320,59 @@ syntax on
   au BufRead,BufNewFile *.ru,*.rake                       setf ruby
   au BufRead,BufNewFile Capfile,Gemfile,Isolate,Rakefile  setf ruby
   au BufRead,BufNewFile *vimrc                            setf vim
-  au BufRead,BufNewFile *.scss                            setf sass
+
   " use cursorcolumn in whitespace-sensitive file formats
   " au Filetype coffee,python,haml,sass,slim set cursorcolumn
+
   " The python way... yuk, but I can deal
   au Filetype python set tabstop=4 shiftwidth=4
+
   autocmd FileType html
         \ let b:AutoClosePairs = AutoClose#DefaultPairsModified("<>", "")
+
 " Splits
 " =============================================================================
   set splitbelow                        " open new horiz splits below current
   set splitright                        " open new vert splits to the right
+
   nnoremap <C-j>        <C-w><Down>
   nnoremap <C-k>        <C-w><Up>
   nnoremap <C-h>        <C-w><Left>
   nnoremap <C-l>        <C-w><Right>
+
 " Tabs
 " =============================================================================
   nnoremap <S-h> :tabnext<CR>
   nnoremap <S-l> :tabprevious<CR>
+
 " File Navigation
 " =============================================================================
   let g:netrw_liststyle=4
+
   " change directory to that of current file
   nmap <Leader>cd :cd%:p:h<cr>
+
   " ctags-related
   set tags+=../tags,../../tags,../../../tags,../../../../tags,tmp/tags
   map <silent> <Leader>r :!/usr/local/bin/ctags -f tags -R *<CR><CR>
+
 " Fugitive and GitV
 " =============================================================================
   nnoremap <Leader>gs :Gstatus<CR>
   nnoremap <silent> <Leader>gd :w<CR>:Gdiff<CR><CR>
   nnoremap <Leader>gb :Gblame<CR>
   nnoremap <Leader>gw :Gw<CR>
+
   nnoremap <Leader>gv :Gitv --all<CR>
   nnoremap <Leader>gV :Gitv! --all<CR>
   let g:Gitv_DoNotMapCtrlKey = 1
+
+
 " Utilities
 " =============================================================================
   " just sudo it
   cnoremap w!! %!sudo tee > /dev/null %
+
   " toggle line number modes with <leader>n
   nnoremap <Leader>n :call LineNumbers()<CR>
   function! LineNumbers()
@@ -328,6 +384,7 @@ syntax on
       set nornu nu
     endif
   endfunction
+
   " Stoner Coder Bro says:
   "   whoa, i totally changed this file brah! Like, what happened?
   " Now you can help stoner coder bro figure out what he did
@@ -339,6 +396,7 @@ syntax on
       vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
     endif
   endfunction
+
   " UPPER CASE -> lower case -> Title Case
   " from http://vim.wikia.com/wiki/Switching_case_of_characters
   function! TwiddleCase(str)
@@ -352,6 +410,7 @@ syntax on
     return result
   endfunction
   vnoremap ~ ygv"=TwiddleCase(@")<CR>Pgv
+
   " :( http://briancarper.net/blog/590/cursorcolumn--cursorline-slowdown
   function! CursorTrack()
     if &cursorline
@@ -362,6 +421,7 @@ syntax on
     redraw
   endfunction
   nnoremap <Leader>tc :call CursorTrack()<CR>
+
 " Pasteboard
 " =============================================================================
   " For yanking to / pasting from system clipboard
@@ -371,73 +431,5 @@ syntax on
   vnoremap <Leader>y "*y
   nnoremap <Leader>p "*p
   nnoremap <Leader>P "*P
-  nnoremap <Leader>tp :set paste!<CR>
-" Controversial...swap colon and semicolon for easier commands
-"  nnoremap ; :
-"  nnoremap : ;
-"
-"  vnoremap ; :
-"  vnoremap : ;
-" Mouse
-" =============================================================================
-  if has("mouse")
-    set mouse=a
-  endif
-" Miscellaneous Plugins
-" =============================================================================
-  let g:ragtag_global_maps = 1
-  let g:syntastic_check_on_open=1
-  " prevent autoclose from setting some Esc-leading mappings
-  let g:AutoClosePreserveDotReg=0
-  " ctrl-p
-  set runtimepath^=~/.vim/bundle/ctrlp.vim
 
-" Sessions
-" =============================================================================
-  set sessionoptions=buffers,folds,curdir,tabpages
-  nnoremap SS :wa<CR>:mksession! ~/.vim/session/
-  nnoremap SO :so ~/.vim/session/
-" Status Line
-" =============================================================================
-  function! GitStatus()
-    if exists('*fugitive#statusline')
-      let branchname = fugitive#statusline()
-      if strlen(branchname) > 0
-        let git = ' ± '
-      else
-        let git = ''
-      end
-    else
-      let git = ''
-    endif
-    return git
-  endfunction
-  function! SyntaxStatus()
-    if exists('*SyntasticStatuslineFlag')
-      let toReturn = SyntasticStatuslineFlag()
-      let toReturn = substitute(toReturn, '[\[\]]', ' ', 'g')
-      if strlen(toReturn) > 0
-        return " ".toReturn
-      else
-        return ''
-      endif
-    else
-      return ''
-    endif
-  endfunction
-  let rails_statusline = 0
-  let stl = "%<"
-  let stl .= "%-.60f "
-  let stl .= "%{&filetype} "
-  let stl .= "%*"
-  let stl .= "%-.35{GitStatus()}"
-  let stl .= "%="
-  let stl .= "%#StatusWarning#"
-  let stl .= "%{&modified > 0 ? '-dirty-' : ''}"
-  let stl .= "%{&modified == 1 && &modifiable == 0 ? ' ' : ''}"
-  let stl .= "%{&modifiable == 0 ? '-readonly-' : ''}"
-  let stl .= "%{SyntaxStatus()}"
-  let stl .= "%*"
-  let stl .= " %c:"
-  let stl .= "%l/%L %P"
-  set statusline=%!stl
+  nnoremap <Leader>tp :set paste!<CR>
